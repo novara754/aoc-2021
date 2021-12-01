@@ -7,7 +7,7 @@ fn main() -> io::Result<()> {
 
     for (i, (part1, part2)) in solutions.iter().enumerate() {
         let input = fs::read_to_string("./data/day1.txt")?;
-        println!("Day {}: ", i);
+        println!("Day {}: ", i + 1);
         println!("  Part 1: {}", part1(&input));
         println!("  Part 2: {}", part2(&input));
     }

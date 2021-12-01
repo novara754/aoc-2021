@@ -10,7 +10,7 @@ This repo contains my solutions for the [Advent of Code 2021](https://adventofco
 The input of each day is stored in the `data/` directory. The solutions
 for each day are stored in the corresponding day in the `src/` directory.
 
-To compile and run all solutions you simply have to execute `cargo run` in your terminal.
+To compile and run all solutions you simply have to execute `cargo run --release` in your terminal.
 **Make sure your current working directory is set this project's root directory**.
 
 Each day also has tests using the puzzles' example inputs and solutions. These can be

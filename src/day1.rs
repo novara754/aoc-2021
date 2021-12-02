@@ -20,26 +20,11 @@ pub fn part2(input: &str) -> i32 {
     sums.windows(2).filter(|w| w[0] < w[1]).count() as i32
 }
 
-#[test]
-fn test_part1() {
-    let input = r#"
-199
-200
-208
-210
-200
-207
-240
-269
-260
-263
-    "#;
-    assert_eq!(part1(input), 7);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn test_part2() {
-    let input = r#"
+    const TEST_INPUT: &str = r#"
 199
 200
 208
@@ -51,5 +36,14 @@ fn test_part2() {
 260
 263
     "#;
-    assert_eq!(part2(input), 5);
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1(TEST_INPUT), 7);
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2(TEST_INPUT), 5);
+    }
 }

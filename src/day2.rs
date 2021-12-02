@@ -42,22 +42,11 @@ pub fn part2(input: &str) -> i32 {
     hor * depth
 }
 
-#[test]
-fn test_part1() {
-    let input = r#"
-forward 5
-down 5
-forward 8
-up 3
-down 8
-forward 2
-    "#;
-    assert_eq!(part1(input), 150);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn test_part2() {
-    let input = r#"
+    const TEST_INPUT: &str = r#"
 forward 5
 down 5
 forward 8
@@ -65,5 +54,14 @@ up 3
 down 8
 forward 2
     "#;
-    assert_eq!(part2(input), 900);
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(part1(TEST_INPUT), 150);
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(part2(TEST_INPUT), 900);
+    }
 }

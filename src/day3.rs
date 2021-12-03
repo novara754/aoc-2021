@@ -22,23 +22,37 @@ fn half_len(values: &[&str]) -> f32 {
 
 pub fn part1(input: &str) -> i32 {
     let values = parse_input(input);
+    let half_len = half_len(&values);
     let counts = do_count(&values);
 
-    let half_len = half_len(&values);
-    let gamma_rate = counts.iter().rev().enumerate().fold(0, |acc, (i, c)| {
-        if (*c as f32) > half_len {
-            acc + 2i32.pow(i as u32)
-        } else {
-            acc
+    fn reducer(half_len: f32, flipped: bool) -> impl FnMut(i32, (usize, &f32)) -> i32 {
+        move |acc, (i, c)| {
+            if *c > half_len {
+                if !flipped {
+                    acc + 2i32.pow(i as u32)
+                } else {
+                    acc
+                }
+            } else {
+                if flipped {
+                    acc + 2i32.pow(i as u32)
+                } else {
+                    acc
+                }
+            }
         }
-    });
-    let epsilon_rate = counts.iter().rev().enumerate().fold(0, |acc, (i, c)| {
-        if (*c as f32) > half_len {
-            acc
-        } else {
-            acc + 2i32.pow(i as u32)
-        }
-    });
+    }
+
+    let gamma_rate = counts
+        .iter()
+        .rev()
+        .enumerate()
+        .fold(0, reducer(half_len, false));
+    let epsilon_rate = counts
+        .iter()
+        .rev()
+        .enumerate()
+        .fold(0, reducer(half_len, true));
 
     gamma_rate * epsilon_rate
 }
@@ -47,18 +61,27 @@ pub fn part2(input: &str) -> i32 {
     let mut oxygen_candidates = parse_input(input);
     let mut co2_candidates = oxygen_candidates.clone();
 
+    fn pred(
+        counts: &'_ [f32],
+        half_len: f32,
+        flipped: bool,
+        j: usize,
+    ) -> impl FnMut(&&str) -> bool + '_ {
+        move |c: &&str| {
+            let ch = c.chars().nth(j).unwrap();
+            if counts[j] >= half_len {
+                ch == if !flipped { '1' } else { '0' }
+            } else {
+                ch == if flipped { '1' } else { '0' }
+            }
+        }
+    }
+
     let mut j = 0;
     while oxygen_candidates.len() > 1 {
         let counts = do_count(&oxygen_candidates);
         let half_len = half_len(&oxygen_candidates);
-        oxygen_candidates.retain(|c| {
-            if counts[j] >= half_len {
-                c.chars().nth(j).unwrap() == '1'
-            } else {
-                c.chars().nth(j).unwrap() == '0'
-            }
-        });
-
+        oxygen_candidates.retain(pred(&counts, half_len, false, j));
         j += 1;
     }
 
@@ -66,14 +89,7 @@ pub fn part2(input: &str) -> i32 {
     while co2_candidates.len() > 1 {
         let counts = do_count(&co2_candidates);
         let half_len = half_len(&co2_candidates);
-        co2_candidates.retain(|c| {
-            if counts[j] >= half_len {
-                c.chars().nth(j).unwrap() == '0'
-            } else {
-                c.chars().nth(j).unwrap() == '1'
-            }
-        });
-
+        co2_candidates.retain(pred(&counts, half_len, true, j));
         j += 1;
     }
 

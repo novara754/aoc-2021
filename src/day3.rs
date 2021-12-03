@@ -21,71 +21,51 @@ fn half_len(values: &[&str]) -> f32 {
 }
 
 pub fn part1(input: &str) -> i32 {
-    let values = parse_input(input);
-    let half_len = half_len(&values);
-    let counts = do_count(&values);
-
-    fn reducer(cond: impl Fn(f32) -> bool) -> impl FnMut(i32, (usize, &f32)) -> i32 {
-        move |acc, (i, c)| {
+    fn find_rate(counts: &[f32], cond: impl Fn(f32) -> bool) -> i32 {
+        counts.iter().rev().enumerate().fold(0, |acc, (i, c)| {
             if cond(*c) {
                 acc + 2i32.pow(i as u32)
             } else {
                 acc
             }
-        }
+        })
     }
 
-    let gamma_rate = counts
-        .iter()
-        .rev()
-        .enumerate()
-        .fold(0, reducer(|c| c >= half_len));
-    let epsilon_rate = counts
-        .iter()
-        .rev()
-        .enumerate()
-        .fold(0, reducer(|c| c < half_len));
+    let values = parse_input(input);
+    let half_len = half_len(&values);
+    let counts = do_count(&values);
+
+    let gamma_rate = find_rate(&counts, |c| c >= half_len);
+    let epsilon_rate = find_rate(&counts, |c| c < half_len);
 
     gamma_rate * epsilon_rate
 }
 
 pub fn part2(input: &str) -> i32 {
-    let mut oxygen_candidates = parse_input(input);
-    let mut co2_candidates = oxygen_candidates.clone();
-
-    fn pred<'a>(
-        counts: &'a [f32],
-        j: usize,
-        cond: impl Fn(f32) -> bool + 'a,
-    ) -> impl FnMut(&&str) -> bool + 'a {
-        move |c: &&str| {
-            let ch = c.chars().nth(j).unwrap();
-            if cond(counts[j]) {
-                ch == '1'
-            } else {
-                ch == '0'
-            }
+    fn find_rating(mut candidates: Vec<&str>, cond: impl Fn(f32, f32) -> bool) -> i32 {
+        let mut j = 0;
+        while candidates.len() > 1 {
+            let counts = do_count(&candidates);
+            let half_len = half_len(&candidates);
+            candidates.retain(|c: &&str| {
+                let ch = c.chars().nth(j).unwrap();
+                if cond(counts[j], half_len) {
+                    ch == '1'
+                } else {
+                    ch == '0'
+                }
+            });
+            j += 1;
         }
+
+        i32::from_str_radix(candidates[0], 2).unwrap()
     }
 
-    let mut j = 0;
-    while oxygen_candidates.len() > 1 {
-        let counts = do_count(&oxygen_candidates);
-        let half_len = half_len(&oxygen_candidates);
-        oxygen_candidates.retain(pred(&counts, j, |c| c >= half_len));
-        j += 1;
-    }
+    let oxygen_candidates = parse_input(input);
+    let co2_candidates = oxygen_candidates.clone();
 
-    let mut j = 0;
-    while co2_candidates.len() > 1 {
-        let counts = do_count(&co2_candidates);
-        let half_len = half_len(&co2_candidates);
-        co2_candidates.retain(pred(&counts, j, |c| c < half_len));
-        j += 1;
-    }
-
-    let oxygen_rating = i32::from_str_radix(oxygen_candidates[0], 2).unwrap();
-    let co2_rating = i32::from_str_radix(co2_candidates[0], 2).unwrap();
+    let oxygen_rating = find_rating(oxygen_candidates, |c, half_len| c >= half_len);
+    let co2_rating = find_rating(co2_candidates, |c, half_len| c < half_len);
 
     oxygen_rating * co2_rating
 }

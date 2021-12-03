@@ -1,5 +1,6 @@
 mod day1;
 mod day2;
+mod day3;
 
 use std::{fs, io};
 
@@ -7,7 +8,11 @@ type SolutionFn = for<'r> fn(&'r str) -> i32;
 type Solution = (SolutionFn, SolutionFn);
 
 fn main() -> io::Result<()> {
-    let solutions: [Solution; 2] = [(day1::part1, day1::part2), (day2::part1, day2::part2)];
+    let solutions: [Solution; 3] = [
+        (day1::part1, day1::part2),
+        (day2::part1, day2::part2),
+        (day3::part1, day3::part2),
+    ];
 
     for (i, (part1, part2)) in solutions.iter().enumerate() {
         let day = i + 1;

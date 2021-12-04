@@ -1,0 +1,6 @@
+# Editor config
+.vscode/
+
+# Build artifacts
+zig-cache
+zig-out

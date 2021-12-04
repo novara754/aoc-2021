@@ -21,14 +21,18 @@ pub fn part1(input: []const u8) i32 {
 pub fn part2(input: []const u8) i32 {
     var count: i32 = 0;
 
-    var last_values = [3]i32{ -1, -1, -1 };
+    var last_values = [3]i32{ undefined, undefined, undefined };
     var lines = std.mem.split(u8, input, "\n");
-    while (lines.next()) |line| {
+    var enumerate = util.enumerate([]const u8, lines);
+    while (enumerate.next()) |item| {
+        const idx = item.index;
+        const line = item.value;
+
         if (line.len == 0) continue;
 
         const value = util.parseInt(line);
 
-        if (last_values[0] != -1 and value > last_values[0]) {
+        if (idx > 2 and value > last_values[0]) {
             count += 1;
         }
 

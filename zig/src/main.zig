@@ -6,8 +6,6 @@ const SolutionFn = fn ([]const u8) i32;
 const Solution = struct { part1: SolutionFn, part2: SolutionFn };
 
 pub fn main() anyerror!void {
-    std.log.info("All your codebase are belong to us.", .{});
-
     const solutions = [_]Solution{ .{ .part1 = day1.part1, .part2 = day1.part2 }, .{ .part1 = day2.part1, .part2 = day2.part2 } };
 
     for (solutions) |solution, i| {

@@ -10,9 +10,9 @@ impl Board {
             grid: [[(0, false); 5]; 5],
             result: None,
         };
-        for i in 0..5 {
-            for j in 0..5 {
-                board.grid[i][j].0 = grid[i][j];
+        for (i, r) in grid.iter().enumerate() {
+            for (j, v) in r.iter().enumerate() {
+                board.grid[i][j].0 = *v;
             }
         }
         board

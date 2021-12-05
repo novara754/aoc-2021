@@ -54,27 +54,16 @@ pub fn part2(input: &str) -> i32 {
     let mut map = vec![vec![0; 1000]; 1000];
 
     for Line(x1, y1, x2, y2) in parse_input(input) {
-        if y1 == y2 {
-            let (x1, x2) = order(x1, x2);
-            for x in x1..(x2 + 1) {
-                map[y1 as usize][x as usize] += 1;
-            }
-        } else if x1 == x2 {
-            let (y1, y2) = order(y1, y2);
-            for y in y1..(y2 + 1) {
-                map[y as usize][x1 as usize] += 1;
-            }
-        } else {
-            let dx = x2 - x1;
-            let dy = y2 - y1;
-            let mx = dx.signum();
-            let my = dy.signum();
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        let d = dx.abs().max(dy.abs());
+        let mx = dx.signum();
+        let my = dy.signum();
 
-            for i in 0..(dx.abs() + 1) {
-                let cx = x1 + mx * i;
-                let cy = y1 + my * i;
-                map[cy as usize][cx as usize] += 1;
-            }
+        for i in 0..(d + 1) {
+            let cx = x1 + mx * i;
+            let cy = y1 + my * i;
+            map[cy as usize][cx as usize] += 1;
         }
     }
 

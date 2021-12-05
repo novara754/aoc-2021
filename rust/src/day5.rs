@@ -53,7 +53,7 @@ pub fn part1(input: &str) -> i32 {
 pub fn part2(input: &str) -> i32 {
     let mut map = vec![vec![0; 1000]; 1000];
 
-    for l @ Line(x1, y1, x2, y2) in parse_input(input) {
+    for Line(x1, y1, x2, y2) in parse_input(input) {
         if y1 == y2 {
             let (x1, x2) = order(x1, x2);
             for x in x1..(x2 + 1) {

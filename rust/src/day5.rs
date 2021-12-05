@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::util::parse_i32;
 
 #[derive(Debug)]
@@ -31,27 +33,27 @@ pub fn order(a: i32, b: i32) -> (i32, i32) {
 }
 
 pub fn part1(input: &str) -> i32 {
-    let mut map = vec![vec![0; 1000]; 1000];
+    let mut map = HashMap::<(i32, i32), i32>::new();
 
     for Line(x1, y1, x2, y2) in parse_input(input) {
         if y1 == y2 {
             let (x1, x2) = order(x1, x2);
             for x in x1..(x2 + 1) {
-                map[y1 as usize][x as usize] += 1;
+                *map.entry((x, y1)).or_default() += 1;
             }
         } else if x1 == x2 {
             let (y1, y2) = order(y1, y2);
             for y in y1..(y2 + 1) {
-                map[y as usize][x1 as usize] += 1;
+                *map.entry((x1, y)).or_default() += 1;
             }
         }
     }
 
-    map.iter().flatten().filter(|n| **n >= 2).count() as i32
+    map.values().filter(|n| **n >= 2).count() as i32
 }
 
 pub fn part2(input: &str) -> i32 {
-    let mut map = vec![vec![0; 1000]; 1000];
+    let mut map = HashMap::<(i32, i32), i32>::new();
 
     for Line(x1, y1, x2, y2) in parse_input(input) {
         let dx = x2 - x1;
@@ -63,11 +65,11 @@ pub fn part2(input: &str) -> i32 {
         for i in 0..(d + 1) {
             let cx = x1 + mx * i;
             let cy = y1 + my * i;
-            map[cy as usize][cx as usize] += 1;
+            *map.entry((cx, cy)).or_default() += 1;
         }
     }
 
-    map.iter().flatten().filter(|n| **n >= 2).count() as i32
+    map.values().filter(|n| **n >= 2).count() as i32
 }
 
 #[cfg(test)]

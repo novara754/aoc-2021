@@ -1,3 +1,5 @@
+use crate::util::parse_i32;
+
 #[derive(Debug)]
 struct Board {
     grid: [[(i32, bool); 5]; 5],
@@ -51,12 +53,7 @@ fn parse_input(input: &'_ str) -> (Vec<i32>, Vec<Board>) {
     let input = input.trim();
     let mut lines = input.lines();
 
-    let numbers: Vec<i32> = lines
-        .next()
-        .unwrap()
-        .split(',')
-        .map(|n| n.parse().unwrap())
-        .collect();
+    let numbers: Vec<i32> = lines.next().unwrap().split(',').map(parse_i32).collect();
 
     let mut boards = vec![];
     while let Some(_) = lines.next() {
@@ -67,7 +64,7 @@ fn parse_input(input: &'_ str) -> (Vec<i32>, Vec<Board>) {
                     .next()
                     .unwrap()
                     .split_whitespace()
-                    .map(|c| c.parse().unwrap())
+                    .map(parse_i32)
                     .collect(),
             );
         }

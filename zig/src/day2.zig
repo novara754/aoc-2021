@@ -51,7 +51,7 @@ pub fn part2(input: []const u8) i32 {
     return pos * depth;
 }
 
-test "day 1 part 1" {
+test "day 2 part 1" {
     const test_input =
         \\forward 5
         \\down 5
@@ -64,7 +64,7 @@ test "day 1 part 1" {
     try std.testing.expectEqual(part1(test_input), 150);
 }
 
-test "day 1 part 2" {
+test "day 2 part 2" {
     const test_input =
         \\forward 5
         \\down 5

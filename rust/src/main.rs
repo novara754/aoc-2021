@@ -7,7 +7,7 @@ mod util;
 
 use std::{fs, io};
 
-type SolutionFn = for<'r> fn(&'r str) -> i32;
+type SolutionFn = for<'r> fn(&'r str) -> u64;
 type Solution = (SolutionFn, SolutionFn);
 
 fn main() -> io::Result<()> {

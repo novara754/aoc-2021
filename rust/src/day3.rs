@@ -20,11 +20,11 @@ fn half_len(values: &[&str]) -> f32 {
     (values.len() as f32) / 2.0
 }
 
-pub fn part1(input: &str) -> i32 {
-    fn find_rate(counts: &[f32], cond: impl Fn(f32) -> bool) -> i32 {
+pub fn part1(input: &str) -> u64 {
+    fn find_rate(counts: &[f32], cond: impl Fn(f32) -> bool) -> u64 {
         counts.iter().rev().enumerate().fold(0, |acc, (i, c)| {
             if cond(*c) {
-                acc + 2i32.pow(i as u32)
+                acc + 2u64.pow(i as u32)
             } else {
                 acc
             }
@@ -41,8 +41,8 @@ pub fn part1(input: &str) -> i32 {
     gamma_rate * epsilon_rate
 }
 
-pub fn part2(input: &str) -> i32 {
-    fn find_rating(mut candidates: Vec<&str>, cond: impl Fn(f32, f32) -> bool) -> i32 {
+pub fn part2(input: &str) -> u64 {
+    fn find_rating(mut candidates: Vec<&str>, cond: impl Fn(f32, f32) -> bool) -> u64 {
         let mut j = 0;
         while candidates.len() > 1 {
             let counts = do_count(&candidates);
@@ -58,7 +58,7 @@ pub fn part2(input: &str) -> i32 {
             j += 1;
         }
 
-        i32::from_str_radix(candidates[0], 2).unwrap()
+        u64::from_str_radix(candidates[0], 2).unwrap()
     }
 
     let oxygen_candidates = parse_input(input);

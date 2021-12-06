@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::util::parse_i32;
+use crate::util;
 
 #[derive(Debug)]
 struct Line(i32, i32, i32, i32);
@@ -14,10 +14,10 @@ fn parse_input(input: &str) -> Vec<Line> {
             let mut start = segs.next().unwrap().split(',');
             let mut end = segs.next().unwrap().split(',');
 
-            let x1 = parse_i32(start.next().unwrap());
-            let y1 = parse_i32(start.next().unwrap());
-            let x2 = parse_i32(end.next().unwrap());
-            let y2 = parse_i32(end.next().unwrap());
+            let x1 = util::parse_i32(start.next().unwrap());
+            let y1 = util::parse_i32(start.next().unwrap());
+            let x2 = util::parse_i32(end.next().unwrap());
+            let y2 = util::parse_i32(end.next().unwrap());
 
             Line(x1, y1, x2, y2)
         })
@@ -32,7 +32,7 @@ pub fn order(a: i32, b: i32) -> (i32, i32) {
     }
 }
 
-pub fn part1(input: &str) -> i32 {
+pub fn part1(input: &str) -> u64 {
     let mut map = HashMap::<(i32, i32), i32>::new();
 
     for Line(x1, y1, x2, y2) in parse_input(input) {
@@ -49,10 +49,10 @@ pub fn part1(input: &str) -> i32 {
         }
     }
 
-    map.values().filter(|n| **n >= 2).count() as i32
+    map.values().filter(|n| **n >= 2).count() as u64
 }
 
-pub fn part2(input: &str) -> i32 {
+pub fn part2(input: &str) -> u64 {
     let mut map = HashMap::<(i32, i32), i32>::new();
 
     for Line(x1, y1, x2, y2) in parse_input(input) {
@@ -69,7 +69,7 @@ pub fn part2(input: &str) -> i32 {
         }
     }
 
-    map.values().filter(|n| **n >= 2).count() as i32
+    map.values().filter(|n| **n >= 2).count() as u64
 }
 
 #[cfg(test)]

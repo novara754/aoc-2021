@@ -1,7 +1,7 @@
 enum Command {
-    Forward(i32),
-    Down(i32),
-    Up(i32),
+    Forward(u64),
+    Down(u64),
+    Up(u64),
 }
 
 fn parse_input(input: &'_ str) -> impl Iterator<Item = Command> + '_ {
@@ -24,7 +24,7 @@ fn parse_input(input: &'_ str) -> impl Iterator<Item = Command> + '_ {
     })
 }
 
-pub fn part1(input: &str) -> i32 {
+pub fn part1(input: &str) -> u64 {
     let (hor, depth) = parse_input(input).fold((0, 0), |(hor, depth), cmd| match cmd {
         Command::Forward(dis) => (hor + dis, depth),
         Command::Down(dis) => (hor, depth + dis),
@@ -33,7 +33,7 @@ pub fn part1(input: &str) -> i32 {
     hor * depth
 }
 
-pub fn part2(input: &str) -> i32 {
+pub fn part2(input: &str) -> u64 {
     let (hor, depth, _) = parse_input(input).fold((0, 0, 0), |(hor, depth, aim), cmd| match cmd {
         Command::Forward(dis) => (hor + dis, depth + dis * aim, aim),
         Command::Down(dis) => (hor, depth, aim + dis),

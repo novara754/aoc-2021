@@ -5,19 +5,19 @@ fn parse_input(input: &str) -> Vec<i32> {
         .collect()
 }
 
-pub fn part1(input: &str) -> i32 {
+pub fn part1(input: &str) -> u64 {
     parse_input(input)
         .windows(2)
         .filter(|w| w[0] < w[1])
-        .count() as i32
+        .count() as u64
 }
 
-pub fn part2(input: &str) -> i32 {
+pub fn part2(input: &str) -> u64 {
     let sums: Vec<i32> = parse_input(input)
         .windows(3)
         .map(|w| w.iter().sum())
         .collect();
-    sums.windows(2).filter(|w| w[0] < w[1]).count() as i32
+    sums.windows(2).filter(|w| w[0] < w[1]).count() as u64
 }
 
 #[cfg(test)]

@@ -1,13 +1,13 @@
-use crate::util::parse_i32;
+use crate::util;
 
 #[derive(Debug)]
 struct Board {
-    grid: [[(i32, bool); 5]; 5],
-    result: Option<i32>,
+    grid: [[(u64, bool); 5]; 5],
+    result: Option<u64>,
 }
 
 impl Board {
-    fn new(grid: &[Vec<i32>]) -> Self {
+    fn new(grid: &[Vec<u64>]) -> Self {
         let mut board = Self {
             grid: [[(0, false); 5]; 5],
             result: None,
@@ -20,7 +20,7 @@ impl Board {
         board
     }
 
-    fn mark(&mut self, num: i32) -> Option<i32> {
+    fn mark(&mut self, num: u64) -> Option<u64> {
         for i in 0..5 {
             for j in 0..5 {
                 if self.grid[i][j].0 == num {
@@ -49,11 +49,16 @@ impl Board {
     }
 }
 
-fn parse_input(input: &'_ str) -> (Vec<i32>, Vec<Board>) {
+fn parse_input(input: &'_ str) -> (Vec<u64>, Vec<Board>) {
     let input = input.trim();
     let mut lines = input.lines();
 
-    let numbers: Vec<i32> = lines.next().unwrap().split(',').map(parse_i32).collect();
+    let numbers: Vec<u64> = lines
+        .next()
+        .unwrap()
+        .split(',')
+        .map(util::parse_u64)
+        .collect();
 
     let mut boards = vec![];
     while let Some(_) = lines.next() {
@@ -64,7 +69,7 @@ fn parse_input(input: &'_ str) -> (Vec<i32>, Vec<Board>) {
                     .next()
                     .unwrap()
                     .split_whitespace()
-                    .map(parse_i32)
+                    .map(util::parse_u64)
                     .collect(),
             );
         }
@@ -74,7 +79,7 @@ fn parse_input(input: &'_ str) -> (Vec<i32>, Vec<Board>) {
     (numbers, boards)
 }
 
-pub fn part1(input: &str) -> i32 {
+pub fn part1(input: &str) -> u64 {
     let (numbers, mut boards) = parse_input(input);
 
     (|| {
@@ -89,7 +94,7 @@ pub fn part1(input: &str) -> i32 {
     })()
 }
 
-pub fn part2(input: &str) -> i32 {
+pub fn part2(input: &str) -> u64 {
     let (numbers, mut boards) = parse_input(input);
 
     (|| {

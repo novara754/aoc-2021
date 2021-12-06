@@ -1,9 +1,9 @@
 const std = @import("std");
 const util = @import("util.zig");
 
-pub fn part1(input: []const u8) i32 {
-    var pos: i32 = 0;
-    var depth: i32 = 0;
+pub fn part1(input: []const u8) u64 {
+    var pos: u64 = 0;
+    var depth: u64 = 0;
 
     var lines = std.mem.split(u8, input, "\n");
     while (lines.next()) |line| {
@@ -11,7 +11,7 @@ pub fn part1(input: []const u8) i32 {
 
         var parts = std.mem.split(u8, line, " ");
         const command = parts.next().?;
-        const distance = util.parseInt(parts.next().?);
+        const distance = util.parseInt(u64, parts.next().?);
 
         if (std.mem.eql(u8, command, "forward")) {
             pos += distance;
@@ -25,10 +25,10 @@ pub fn part1(input: []const u8) i32 {
     return pos * depth;
 }
 
-pub fn part2(input: []const u8) i32 {
-    var pos: i32 = 0;
-    var depth: i32 = 0;
-    var aim: i32 = 0;
+pub fn part2(input: []const u8) u64 {
+    var pos: u64 = 0;
+    var depth: u64 = 0;
+    var aim: u64 = 0;
 
     var lines = std.mem.split(u8, input, "\n");
     while (lines.next()) |line| {
@@ -36,7 +36,7 @@ pub fn part2(input: []const u8) i32 {
 
         var parts = std.mem.split(u8, line, " ");
         const command = parts.next().?;
-        const distance = util.parseInt(parts.next().?);
+        const distance = util.parseInt(u64, parts.next().?);
 
         if (std.mem.eql(u8, command, "forward")) {
             pos += distance;

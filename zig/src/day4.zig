@@ -2,7 +2,7 @@ const std = @import("std");
 const util = @import("util.zig");
 
 const Board = struct {
-    grid: [5][5]i32,
+    grid: [5][5]u64,
     marked: [5][5]bool,
     done: bool,
 
@@ -12,7 +12,7 @@ const Board = struct {
         return .{ .grid = undefined, .marked = std.mem.zeroes([5][5]bool), .done = false };
     }
 
-    fn mark(self: *Self, call: i32) ?i32 {
+    fn mark(self: *Self, call: u64) ?u64 {
         for (self.grid) |row, y| {
             for (row) |cell, x| {
                 if (cell == call) {
@@ -47,8 +47,8 @@ const Board = struct {
         return marked;
     }
 
-    fn unmarked_sum(self: *const Self) i32 {
-        var sum: i32 = 0;
+    fn unmarked_sum(self: *const Self) u64 {
+        var sum: u64 = 0;
         for (self.marked) |row, y| {
             for (row) |cell, x| {
                 if (!cell) {
@@ -60,7 +60,7 @@ const Board = struct {
     }
 };
 
-pub fn part1(input: []const u8) i32 {
+pub fn part1(input: []const u8) u64 {
     var inp = std.mem.trimRight(u8, input, "\n");
     var lines = std.mem.split(u8, inp, "\n");
     var calls = std.mem.tokenize(u8, lines.next().?, ",");
@@ -77,7 +77,7 @@ pub fn part1(input: []const u8) i32 {
             var cols = std.mem.tokenize(u8, row, " ");
             var x: usize = 0;
             while (x < 5) : (x += 1) {
-                board.grid[y][x] = util.parseInt(cols.next().?);
+                board.grid[y][x] = util.parseInt(u64, cols.next().?);
             }
         }
 
@@ -85,7 +85,7 @@ pub fn part1(input: []const u8) i32 {
     }
 
     while (calls.next()) |call| {
-        const call_num = util.parseInt(call);
+        const call_num = util.parseInt(u64, call);
         for (boards.items) |*board| {
             if (board.mark(call_num)) |sum| {
                 return sum * call_num;
@@ -96,7 +96,7 @@ pub fn part1(input: []const u8) i32 {
     unreachable;
 }
 
-pub fn part2(input: []const u8) i32 {
+pub fn part2(input: []const u8) u64 {
     var inp = std.mem.trimRight(u8, input, "\n");
     var lines = std.mem.split(u8, inp, "\n");
     var calls = std.mem.tokenize(u8, lines.next().?, ",");
@@ -113,7 +113,7 @@ pub fn part2(input: []const u8) i32 {
             var cols = std.mem.tokenize(u8, row, " ");
             var x: usize = 0;
             while (x < 5) : (x += 1) {
-                board.grid[y][x] = util.parseInt(cols.next().?);
+                board.grid[y][x] = util.parseInt(u64, cols.next().?);
             }
         }
 
@@ -121,9 +121,9 @@ pub fn part2(input: []const u8) i32 {
     }
 
     while (calls.next()) |call| {
-        const call_num = util.parseInt(call);
+        const call_num = util.parseInt(u64, call);
         var boards_left: usize = 0;
-        var last_board_sum: ?i32 = null;
+        var last_board_sum: ?u64 = null;
         for (boards.items) |*board| {
             if (board.done) continue;
             boards_left += 1;

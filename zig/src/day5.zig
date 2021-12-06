@@ -32,8 +32,8 @@ const Map = struct {
         return self.data.get(Point{ .x = x, .y = y });
     }
 
-    fn count(self: *const Self) i32 {
-        var total: i32 = 0;
+    fn count(self: *const Self) u64 {
+        var total: u64 = 0;
         var values = self.data.valueIterator();
         while (values.next()) |v| {
             if (v.* >= 2) total += 1;
@@ -42,7 +42,7 @@ const Map = struct {
     }
 };
 
-pub fn part1(input: []const u8) i32 {
+pub fn part1(input: []const u8) u64 {
     var map = Map.init();
     defer map.deinit();
 
@@ -52,10 +52,10 @@ pub fn part1(input: []const u8) i32 {
         var start = std.mem.tokenize(u8, parts.next().?, ",");
         var end = std.mem.tokenize(u8, parts.next().?, ",");
 
-        const x1 = util.parseInt(start.next().?);
-        const y1 = util.parseInt(start.next().?);
-        const x2 = util.parseInt(end.next().?);
-        const y2 = util.parseInt(end.next().?);
+        const x1 = util.parseInt(i32, start.next().?);
+        const y1 = util.parseInt(i32, start.next().?);
+        const x2 = util.parseInt(i32, end.next().?);
+        const y2 = util.parseInt(i32, end.next().?);
 
         if (x1 == x2) {
             const min = std.math.min(y1, y2);
@@ -110,7 +110,7 @@ fn abs(n: i32) i32 {
     }
 }
 
-pub fn part2(input: []const u8) i32 {
+pub fn part2(input: []const u8) u64 {
     var map = Map.init();
     defer map.deinit();
 
@@ -120,10 +120,10 @@ pub fn part2(input: []const u8) i32 {
         var start = std.mem.tokenize(u8, parts.next().?, ",");
         var end = std.mem.tokenize(u8, parts.next().?, ",");
 
-        const x1 = util.parseInt(start.next().?);
-        const y1 = util.parseInt(start.next().?);
-        const x2 = util.parseInt(end.next().?);
-        const y2 = util.parseInt(end.next().?);
+        const x1 = util.parseInt(i32, start.next().?);
+        const y1 = util.parseInt(i32, start.next().?);
+        const x2 = util.parseInt(i32, end.next().?);
+        const y2 = util.parseInt(i32, end.next().?);
 
         const d = math.max(abs(x2 - x1), abs(y2 - y1));
         const mx = signum(x2 - x1);

@@ -1,14 +1,14 @@
 const std = @import("std");
 const util = @import("util.zig");
 
-pub fn part1(input: []const u8) i32 {
+pub fn part1(input: []const u8) u64 {
     _ = input;
-    return -1;
+    return 0;
 }
 
-pub fn part2(input: []const u8) i32 {
+pub fn part2(input: []const u8) u64 {
     _ = input;
-    return -1;
+    return 0;
 }
 
 test "day 3 part 1" {}

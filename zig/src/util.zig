@@ -1,7 +1,7 @@
 const std = @import("std");
 
-pub fn parseInt(str: []const u8) i32 {
-    return std.fmt.parseInt(i32, str, 10) catch unreachable;
+pub fn parseInt(comptime T: type, str: []const u8) T {
+    return std.fmt.parseInt(T, str, 10) catch unreachable;
 }
 
 pub fn EnumerateIterator(comptime I: type, comptime T: type) type {

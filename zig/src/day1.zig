@@ -1,14 +1,14 @@
 const std = @import("std");
 const util = @import("util.zig");
 
-pub fn part1(input: []const u8) i32 {
-    var count: i32 = 0;
+pub fn part1(input: []const u8) u64 {
+    var count: u64 = 0;
 
     var last_value: i32 = -1;
     var lines = std.mem.split(u8, input, "\n");
     while (lines.next()) |line| {
         if (line.len == 0) continue;
-        const value = util.parseInt(line);
+        const value = util.parseInt(i32, line);
         if (last_value != -1 and value > last_value) {
             count += 1;
         }
@@ -18,8 +18,8 @@ pub fn part1(input: []const u8) i32 {
     return count;
 }
 
-pub fn part2(input: []const u8) i32 {
-    var count: i32 = 0;
+pub fn part2(input: []const u8) u64 {
+    var count: u64 = 0;
 
     var last_values = [3]i32{ undefined, undefined, undefined };
     var lines = std.mem.split(u8, input, "\n");
@@ -30,7 +30,7 @@ pub fn part2(input: []const u8) i32 {
 
         if (line.len == 0) continue;
 
-        const value = util.parseInt(line);
+        const value = util.parseInt(i32, line);
 
         if (idx > 2 and value > last_values[0]) {
             count += 1;

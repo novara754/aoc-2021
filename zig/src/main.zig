@@ -5,7 +5,7 @@ const day3 = @import("day3.zig");
 const day4 = @import("day4.zig");
 const day5 = @import("day5.zig");
 
-const SolutionFn = fn ([]const u8) i32;
+const SolutionFn = fn ([]const u8) u64;
 const Solution = struct { part1: SolutionFn, part2: SolutionFn };
 
 pub fn main() anyerror!void {

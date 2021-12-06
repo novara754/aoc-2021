@@ -1,7 +1,7 @@
 const std = @import("std");
 const util = @import("util.zig");
 
-pub fn part1(input: []const u8) u64 {
+pub fn part1(input: []const u8) !u64 {
     var count: u64 = 0;
 
     var last_value: i32 = -1;
@@ -18,7 +18,7 @@ pub fn part1(input: []const u8) u64 {
     return count;
 }
 
-pub fn part2(input: []const u8) u64 {
+pub fn part2(input: []const u8) !u64 {
     var count: u64 = 0;
 
     var last_values = [3]i32{ undefined, undefined, undefined };

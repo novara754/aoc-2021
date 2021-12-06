@@ -19,8 +19,8 @@ const Map = struct {
         self.data.deinit();
     }
 
-    fn mark(self: *Self, x: i32, y: i32) void {
-        const res = self.data.getOrPut(Point{ .x = x, .y = y }) catch unreachable;
+    fn mark(self: *Self, x: i32, y: i32) !void {
+        const res = try self.data.getOrPut(Point{ .x = x, .y = y });
         if (res.found_existing) {
             res.value_ptr.* += 1;
         } else {
@@ -42,7 +42,7 @@ const Map = struct {
     }
 };
 
-pub fn part1(input: []const u8) u64 {
+pub fn part1(input: []const u8) !u64 {
     var map = Map.init();
     defer map.deinit();
 
@@ -63,7 +63,7 @@ pub fn part1(input: []const u8) u64 {
 
             var y = min;
             while (y <= max) : (y += 1) {
-                map.mark(x1, y);
+                try map.mark(x1, y);
             }
         } else if (y1 == y2) {
             const min = math.min(x1, x2);
@@ -71,7 +71,7 @@ pub fn part1(input: []const u8) u64 {
 
             var x = min;
             while (x <= max) : (x += 1) {
-                map.mark(x, y1);
+                try map.mark(x, y1);
             }
         }
     }
@@ -110,7 +110,7 @@ fn abs(n: i32) i32 {
     }
 }
 
-pub fn part2(input: []const u8) u64 {
+pub fn part2(input: []const u8) !u64 {
     var map = Map.init();
     defer map.deinit();
 
@@ -133,7 +133,7 @@ pub fn part2(input: []const u8) u64 {
         while (c <= d) : (c += 1) {
             const cx = x1 + c * mx;
             const cy = y1 + c * my;
-            map.mark(cx, cy);
+            try map.mark(cx, cy);
         }
     }
 

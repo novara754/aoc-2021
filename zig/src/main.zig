@@ -6,7 +6,7 @@ const day4 = @import("day4.zig");
 const day5 = @import("day5.zig");
 const day6 = @import("day6.zig");
 
-const SolutionFn = fn ([]const u8) u64;
+const SolutionFn = fn ([]const u8) anyerror!u64;
 const Solution = struct { part1: SolutionFn, part2: SolutionFn };
 
 pub fn main() anyerror!void {
@@ -22,8 +22,8 @@ pub fn main() anyerror!void {
         defer std.heap.page_allocator.free(input);
 
         std.log.info("Day {}", .{day});
-        std.log.info("  Part 1: {}", .{solution.part1(input)});
-        std.log.info("  Part 2: {}", .{solution.part2(input)});
+        std.log.info("  Part 1: {}", .{try solution.part1(input)});
+        std.log.info("  Part 2: {}", .{try solution.part2(input)});
     }
 }
 

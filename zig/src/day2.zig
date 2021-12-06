@@ -1,7 +1,7 @@
 const std = @import("std");
 const util = @import("util.zig");
 
-pub fn part1(input: []const u8) u64 {
+pub fn part1(input: []const u8) !u64 {
     var pos: u64 = 0;
     var depth: u64 = 0;
 
@@ -25,7 +25,7 @@ pub fn part1(input: []const u8) u64 {
     return pos * depth;
 }
 
-pub fn part2(input: []const u8) u64 {
+pub fn part2(input: []const u8) !u64 {
     var pos: u64 = 0;
     var depth: u64 = 0;
     var aim: u64 = 0;

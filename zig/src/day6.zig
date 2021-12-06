@@ -3,7 +3,7 @@ const util = @import("util.zig");
 
 const Key = struct { clock: i32, days_left: usize };
 
-fn simulate_single(clock: i32, days: usize, known: *std.AutoHashMap(Key, u64)) u64 {
+fn simulate_single(clock: i32, days: usize, known: *std.AutoHashMap(Key, u64)) anyerror!u64 {
     var curr_clock = clock;
     if (known.get(.{ .clock = clock, .days_left = days })) |value| {
         return value;
@@ -14,15 +14,15 @@ fn simulate_single(clock: i32, days: usize, known: *std.AutoHashMap(Key, u64)) u
             curr_clock -= 1;
             if (curr_clock == -1) {
                 curr_clock = 6;
-                total += simulate_single(8, days - d - 1, known);
+                total += try simulate_single(8, days - d - 1, known);
             }
         }
-        known.put(.{ .clock = clock, .days_left = days }, total) catch unreachable;
+        try known.put(.{ .clock = clock, .days_left = days }, total);
         return total;
     }
 }
 
-fn simulate(input: []const u8, days: usize) u64 {
+fn simulate(input: []const u8, days: usize) !u64 {
     var known = std.AutoHashMap(Key, u64).init(std.heap.page_allocator);
     defer known.deinit();
 
@@ -34,19 +34,19 @@ fn simulate(input: []const u8, days: usize) u64 {
         if (known.get(.{ .clock = clock, .days_left = days })) |value| {
             total += value;
         } else {
-            const count = simulate_single(clock, days, &known);
-            known.put(.{ .clock = clock, .days_left = days }, count) catch unreachable;
+            const count = try simulate_single(clock, days, &known);
+            try known.put(.{ .clock = clock, .days_left = days }, count);
             total += count;
         }
     }
     return total;
 }
 
-pub fn part1(input: []const u8) u64 {
+pub fn part1(input: []const u8) !u64 {
     return simulate(input, 80);
 }
 
-pub fn part2(input: []const u8) u64 {
+pub fn part2(input: []const u8) !u64 {
     return simulate(input, 256);
 }
 

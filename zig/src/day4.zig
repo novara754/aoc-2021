@@ -60,7 +60,7 @@ const Board = struct {
     }
 };
 
-pub fn part1(input: []const u8) u64 {
+pub fn part1(input: []const u8) !u64 {
     var inp = std.mem.trimRight(u8, input, "\n");
     var lines = std.mem.split(u8, inp, "\n");
     var calls = std.mem.tokenize(u8, lines.next().?, ",");
@@ -81,7 +81,7 @@ pub fn part1(input: []const u8) u64 {
             }
         }
 
-        boards.append(board) catch unreachable;
+        try boards.append(board);
     }
 
     while (calls.next()) |call| {
@@ -96,7 +96,7 @@ pub fn part1(input: []const u8) u64 {
     unreachable;
 }
 
-pub fn part2(input: []const u8) u64 {
+pub fn part2(input: []const u8) !u64 {
     var inp = std.mem.trimRight(u8, input, "\n");
     var lines = std.mem.split(u8, inp, "\n");
     var calls = std.mem.tokenize(u8, lines.next().?, ",");
@@ -117,7 +117,7 @@ pub fn part2(input: []const u8) u64 {
             }
         }
 
-        boards.append(board) catch unreachable;
+        try boards.append(board);
     }
 
     while (calls.next()) |call| {

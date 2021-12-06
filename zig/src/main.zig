@@ -3,12 +3,13 @@ const day1 = @import("day1.zig");
 const day2 = @import("day2.zig");
 const day3 = @import("day3.zig");
 const day4 = @import("day4.zig");
+const day5 = @import("day5.zig");
 
 const SolutionFn = fn ([]const u8) i32;
 const Solution = struct { part1: SolutionFn, part2: SolutionFn };
 
 pub fn main() anyerror!void {
-    const solutions = [_]Solution{ .{ .part1 = day1.part1, .part2 = day1.part2 }, .{ .part1 = day2.part1, .part2 = day2.part2 }, .{ .part1 = day3.part1, .part2 = day3.part2 }, .{ .part1 = day4.part1, .part2 = day4.part2 } };
+    const solutions = [_]Solution{ .{ .part1 = day1.part1, .part2 = day1.part2 }, .{ .part1 = day2.part1, .part2 = day2.part2 }, .{ .part1 = day3.part1, .part2 = day3.part2 }, .{ .part1 = day4.part1, .part2 = day4.part2 }, .{ .part1 = day5.part1, .part2 = day5.part2 } };
 
     for (solutions) |solution, i| {
         const day = i + 1;
@@ -30,4 +31,5 @@ test "" {
     _ = day2;
     _ = day3;
     _ = day4;
+    _ = day5;
 }

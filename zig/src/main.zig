@@ -7,12 +7,13 @@ const day5 = @import("day5.zig");
 const day6 = @import("day6.zig");
 const day7 = @import("day7.zig");
 const day8 = @import("day8.zig");
+const day9 = @import("day9.zig");
 
 const SolutionFn = fn ([]const u8) anyerror!u64;
 const Solution = struct { part1: SolutionFn, part2: SolutionFn };
 
 pub fn main() anyerror!void {
-    const solutions = [_]Solution{ .{ .part1 = day1.part1, .part2 = day1.part2 }, .{ .part1 = day2.part1, .part2 = day2.part2 }, .{ .part1 = day3.part1, .part2 = day3.part2 }, .{ .part1 = day4.part1, .part2 = day4.part2 }, .{ .part1 = day5.part1, .part2 = day5.part2 }, .{ .part1 = day6.part1, .part2 = day6.part2 }, .{ .part1 = day7.part1, .part2 = day7.part2 }, .{ .part1 = day8.part1, .part2 = day8.part2 } };
+    const solutions = [_]Solution{ .{ .part1 = day1.part1, .part2 = day1.part2 }, .{ .part1 = day2.part1, .part2 = day2.part2 }, .{ .part1 = day3.part1, .part2 = day3.part2 }, .{ .part1 = day4.part1, .part2 = day4.part2 }, .{ .part1 = day5.part1, .part2 = day5.part2 }, .{ .part1 = day6.part1, .part2 = day6.part2 }, .{ .part1 = day7.part1, .part2 = day7.part2 }, .{ .part1 = day8.part1, .part2 = day8.part2 }, .{ .part1 = day9.part1, .part2 = day9.part2 } };
 
     for (solutions) |solution, i| {
         const day = i + 1;
@@ -38,4 +39,5 @@ test "" {
     _ = day6;
     _ = day7;
     _ = day8;
+    _ = day9;
 }

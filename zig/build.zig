@@ -12,7 +12,6 @@ pub fn build(b: *std.build.Builder) void {
     const mode = b.standardReleaseOptions();
 
     const exe = b.addExecutable("aoc2021-zig", "src/main.zig");
-    exe.emit_docs = true;
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.install();

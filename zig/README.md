@@ -24,7 +24,7 @@ run using `zig build test` to ensure the functionality of the solutions.
 - [x] Day 5
 - [x] Day 6
 - [x] Day 7
-- [ ] Day 8
+- [x] Day 8
 - [x] Day 9
 - [x] Day 10
 - [ ] Day 11

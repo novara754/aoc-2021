@@ -25,9 +25,18 @@ pub fn main() anyerror!void {
         const input = try std.fs.cwd().readFileAlloc(std.heap.page_allocator, path, 1_000_000);
         defer std.heap.page_allocator.free(input);
 
-        std.log.info("Day {}", .{day});
-        std.log.info("  Part 1: {}", .{try solution.part1(input)});
-        std.log.info("  Part 2: {}", .{try solution.part2(input)});
+        var start: i128 = std.time.nanoTimestamp();
+        const part1 = try solution.part1(input);
+        const part1_time = std.time.nanoTimestamp() - start;
+
+        start = std.time.nanoTimestamp();
+        const part2 = try solution.part2(input);
+        const part2_time = std.time.nanoTimestamp() - start;
+
+        std.debug.print("Day {}\n", .{day});
+        std.debug.print("  Part 1: {} ({} ns)\n", .{ part1, part1_time });
+
+        std.debug.print("  Part 2: {} ({} ns)\n", .{ part2, part2_time });
     }
 }
 
